@@ -1,52 +1,77 @@
-import TodoData from './component/todo/TodoData';
-import TodoNew from './component/todo/TodoNew';
-import './component/todo/todo.css';
-import reactLogo from './assets/react.svg';
-import { useState } from 'react';
+import Header from './component/layout/header';
+import Footer from './component/layout/footer';
+import { Outlet } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from './component/context/auth.context';
+import { getAccountAPI } from './services/api.service';
+import { Spin } from 'antd';
 
+// const ParentComponent = (props) => {
+//   // console.log("Check props",props)
+//   return (<>
+//     Parent Component
+//     {/* {props.child} nếu muốn hiển thị trong component thì dùng cái này*/}
+//   </>)
+// }
+
+// const ChildComponent = (props) => {
+//   // console.log("Check props",props)
+//   return (<>
+//     Child Component
+//   </>)
+// }
 const App = () => {
-
-  const [todoList, setTodoList] = useState([
-    // { id: 1, name: "Learning React " },
-    // { id: 2, name: "Watching Youtube" }
-  ])
-
-  const addNewTodo = (name) => {
-    const newTodo = {
-      id: randomIntFromInterval(1, 1000000),
-      name1: name
-    }
-
-    setTodoList([...todoList, newTodo])
-  }
-
-  const randomIntFromInterval = (min, max) => { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-  const deleteTodo = (thamsoIdtuTodoData) => {
-    const newTodo = todoList.filter(item => item.id !== thamsoIdtuTodoData);
-    setTodoList(newTodo);
-    // console.log(">>>> Check", thamsoIdtuTodoData);
-  }
-
   //{key:value}
+  const { setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext);
+
+
+  // const delay = (milSeconds) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve()
+  //     }, milSeconds)
+  //   })
+  // }
+
+  const fetchUserInfo = async () => {
+    const res = await getAccountAPI();
+    // await delay(3000)
+    // console.log(">>> check values: ", res)
+    if (res.data) {
+      //success
+      setUser(res.data.user)
+      // console.log(">>> check user data: ", res.data)
+    }
+    setIsAppLoading(false);
+  }
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
   return (
-    <div className="todo-container">
-      <div className="todo-title">Todo List</div>
-      <TodoNew
-        addNewTodo={addNewTodo}
-      />
-      {todoList.length > 0 ?
-        <TodoData
-          todoList={todoList}
-          deleteTodo1={deleteTodo}
-        />
-        :
-        <div className='todo-image'>
-          <img src={reactLogo} className='logo' />
+    <>
+      {/* <ParentComponent>
+        bên trong component
+        <ChildComponent />
+      </ParentComponent> */}
+      {isAppLoading === true ?
+        <div style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}>
+          <Spin />
         </div>
+        :
+        <>
+          <Header />
+          <Outlet />
+          <Footer />
+        </>
       }
-    </div>
+
+    </>
   )
 }
 

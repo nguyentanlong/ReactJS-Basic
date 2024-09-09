@@ -4,6 +4,8 @@ Template này được sử dụng cho series React Ultimate (Vite) của tác g
 ### Môi trường chạy dự án: Node.js v20.14.0
 https://nodejs.org/download/release/v20.14.0/
 
+//cai antd video 63 version 5
+
 ## Về tác giả
 Mọi thông tin về Tác giả Hỏi Dân IT, các bạn có thể tìm kiếm tại đây:
 
