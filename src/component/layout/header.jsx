@@ -16,6 +16,8 @@ const Header = () => {
 
     const { user, setUser } = useContext(AuthContext);
 
+    const navigate = useNavigate();
+
     const handleLogout = async () => {
         const res = await logoutAPI();
         if (res.data) {

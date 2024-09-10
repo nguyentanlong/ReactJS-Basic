@@ -1,7 +1,14 @@
-const BooksPage = () => {
+import BookTable from "../component/book/book.table";
+
+
+const BookPage = () => {
     return (
-        <div>Product page</div>
+        <>
+            <div style={{ padding: "20px" }}>
+                <BookTable />
+            </div>
+        </>
+
     )
 }
-
-export default BooksPage;
+export default BookPage;

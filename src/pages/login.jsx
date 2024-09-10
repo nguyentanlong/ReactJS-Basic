@@ -35,6 +35,22 @@ const LoginPage = () => {
         }
         setLoading(false);
 
+        // const enterLoading = (index: number) => {
+        //     setLoadings((prevLoadings) => {
+        //       const newLoadings = [...prevLoadings];
+        //       newLoadings[index] = true;
+        //       return newLoadings;
+        //     });
+
+        //     setTimeout(() => {
+        //       setLoadings((prevLoadings) => {
+        //         const newLoadings = [...prevLoadings];
+        //         newLoadings[index] = false;
+        //         return newLoadings;
+        //       });
+        //     }, 6000);
+        //   };
+
     }
 
     return (
@@ -55,6 +71,9 @@ const LoginPage = () => {
                             onFinish={onFinish}
                         >
                             <Form.Item
+                                onKeyDown={(event) => {
+                                    if (event.key === 'Enter') form.submit()
+                                }}
                                 label="Email"
                                 name="email"
                                 rules={[
